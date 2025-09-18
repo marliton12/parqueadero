@@ -21,6 +21,6 @@ public class RegisterController {
             registerService.insertRegister(registerRequestDto);
             return ResponseEntity
                     .status(201)
-                    .body("insertated");
+                    .body("added");
     }
 }

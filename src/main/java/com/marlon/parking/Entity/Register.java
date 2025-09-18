@@ -21,8 +21,9 @@ public class Register {
     @JoinColumn(name = "id_vehiculo", nullable = false)
     private Vehicle vehicle;
 
-//    @Column(name = "id_espacio", nullable = false)
-//    private Space space;
+    @ManyToOne
+    @JoinColumn(name = "id_espacio", nullable = false)
+    private Space space;
 
     @Column(name = "hora_entrada", nullable = false)
     private LocalDateTime entryHour;
@@ -33,7 +34,5 @@ public class Register {
     @Column(name = "costo", nullable = false)
     private BigDecimal cost;
 
-    @OneToMany(mappedBy = "register", cascade = CascadeType.ALL)
-    private List<Space> spaces = new ArrayList<>();
 }
 

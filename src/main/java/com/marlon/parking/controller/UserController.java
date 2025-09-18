@@ -2,6 +2,7 @@ package com.marlon.parking.controller;
 
 
 import com.marlon.parking.Dto.UserRequestDto;
+import com.marlon.parking.Dto.UserResponseDto;
 import com.marlon.parking.Entity.User;
 import com.marlon.parking.service.UserService;
 import jakarta.transaction.Transactional;
@@ -27,16 +28,16 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserResponseDto>> getAllUsers(){
+        return ResponseEntity
+                .ok(userService.getAllUsers());
     }
 
-    @Transactional
     @DeleteMapping("/{documentId}")
     public ResponseEntity<String> deleteUser(@PathVariable String documentId){
         userService.deleteUser(documentId);
         return ResponseEntity
-                .status(410)
+                .status(200)
                 .body("user deleted");
     }
 }

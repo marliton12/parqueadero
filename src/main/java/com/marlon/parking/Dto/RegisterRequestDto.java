@@ -1,9 +1,16 @@
 package com.marlon.parking.Dto;
 
+import com.marlon.parking.Entity.Vehicle;
+import lombok.Getter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Getter
 public class RegisterRequestDto {
+
+    private String plate;
+
     private LocalDateTime entryHour;
 
     private LocalDateTime exitHour;
@@ -16,15 +23,4 @@ public class RegisterRequestDto {
         this.cost = cost;
     }
 
-    public LocalDateTime getEntryHour() {
-        return entryHour;
-    }
-
-    public LocalDateTime getExitHour() {
-        return exitHour;
-    }
-
-    public BigDecimal getCost() {
-        return cost;
-    }
 }

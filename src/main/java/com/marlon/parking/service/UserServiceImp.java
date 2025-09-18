@@ -1,12 +1,15 @@
 package com.marlon.parking.service;
 
 import com.marlon.parking.Dto.UserRequestDto;
+import com.marlon.parking.Dto.UserResponseDto;
 import com.marlon.parking.Entity.User;
 import com.marlon.parking.Exception.UserDoesNotRegisteredException;
 import com.marlon.parking.Exception.UserAlreadyRegisteredException;
 import com.marlon.parking.Repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +22,7 @@ public class UserServiceImp implements UserService{
         this.userRepository = userRepository;
     }
 
+    @Transactional
     @Override
     public void createUser(UserRequestDto userRequestDto) {
        Optional<User> userOptional = userRepository.findUserByDocumentId(userRequestDto.getDocumentId());
@@ -31,10 +35,18 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponseDto> getAllUsers() {
+
+        List<User> users = userRepository.findAll();
+        List<UserResponseDto> dtos = new ArrayList<>();
+        for (User user : users) {
+            UserResponseDto aux = new UserResponseDto(user.getId(), user.getName(), user.getDocumentId(), user.getPhone(), user.getEmail());
+            dtos.add(aux);
+        }
+        return dtos;
     }
 
+    @Transactional
     @Override
     public void deleteUser(String documentId) {
         User user = userRepository.findUserByDocumentId(documentId)

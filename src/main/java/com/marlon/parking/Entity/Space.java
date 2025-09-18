@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -28,7 +31,8 @@ public class Space {
     @Column(name = "disponible", nullable = false)
     private Boolean available;
 
-    @ManyToOne()
-//    @JoinColumn(name = "id_espacio")
-    private Register register;
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
+    private List<Register> registers = new ArrayList<>();
+
+
 }
