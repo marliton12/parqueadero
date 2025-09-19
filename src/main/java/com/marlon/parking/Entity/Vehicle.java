@@ -29,7 +29,7 @@ public class Vehicle {
     @Column(name = "color", nullable = false)
     private String color;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
+    @ManyToOne()
+    @JoinColumn(name = "id_usuario", nullable = false, foreignKey = @ForeignKey(name = "fk_vehicle_user"))
     private User user;
 }

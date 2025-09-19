@@ -1,14 +1,17 @@
 package com.marlon.parking.service;
 
-import com.marlon.parking.Dto.VehicleRequestDto;
-import com.marlon.parking.Dto.VehicleResponseDto;
-import com.marlon.parking.Entity.Vehicle;
+import com.marlon.parking.Dto.requests.VehicleRequestDto;
+import com.marlon.parking.Dto.responses.VehicleResponseDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface VehicleService {
     void createVehicle(VehicleRequestDto vehicleRequestDto);
 
     List<VehicleResponseDto> getAllVehicles();
+
+    VehicleResponseDto findVehicleByPlate(String plate);
+
+    void deleteVehicle(String plate);
+
 }

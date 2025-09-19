@@ -17,11 +17,11 @@ public class Register {
     @Column(name = "id_registro", nullable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_vehiculo", nullable = false)
     private Vehicle vehicle;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_espacio", nullable = false)
     private Space space;
 

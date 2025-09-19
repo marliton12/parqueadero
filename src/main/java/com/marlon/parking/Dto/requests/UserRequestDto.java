@@ -1,14 +1,11 @@
-package com.marlon.parking.Dto;
+package com.marlon.parking.Dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserResponseDto {
-
-    private Long id;
-
+public class UserRequestDto {
     private String name;
 
     private String documentId;

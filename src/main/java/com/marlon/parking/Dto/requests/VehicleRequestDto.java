@@ -1,4 +1,4 @@
-package com.marlon.parking.Dto;
+package com.marlon.parking.Dto.requests;
 
 import com.marlon.parking.Entity.VehicleType;
 import lombok.AllArgsConstructor;
@@ -12,4 +12,5 @@ public class VehicleRequestDto {
     private String plate;
     private VehicleType type;
     private String color;
+    private String documentId;
 }

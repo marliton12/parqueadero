@@ -1,21 +1,22 @@
-package com.marlon.parking.service;
+package com.marlon.parking.service.Implementation;
 
-import com.marlon.parking.Dto.RegisterRequestDto;
-import com.marlon.parking.Dto.VehicleRequestDto;
+import com.marlon.parking.Dto.requests.RegisterRequestDto;
 import com.marlon.parking.Entity.Register;
 import com.marlon.parking.Entity.Tariff;
-import com.marlon.parking.Entity.User;
 import com.marlon.parking.Entity.Vehicle;
+import com.marlon.parking.Exception.TariffNotFoundException;
+import com.marlon.parking.Exception.VehicleNotFoundException;
 import com.marlon.parking.Repository.RegisterRepository;
 import com.marlon.parking.Repository.TariffRepository;
 import com.marlon.parking.Repository.VehicleRepository;
+import com.marlon.parking.service.RegisterService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @Service
-public class RegisterServiceImp implements RegisterService{
+public class RegisterServiceImp implements RegisterService {
 
     private final RegisterRepository registerRepository;
     private final VehicleRepository vehicleRepository;
@@ -27,15 +28,16 @@ public class RegisterServiceImp implements RegisterService{
         this.tariffRepository = tariffRepository;
     }
 
+    @Transactional
     @Override
     public void insertRegister(RegisterRequestDto registerRequestDto) {
 
         Vehicle vehicle = vehicleRepository.findByPlate(registerRequestDto.getPlate())
-                .orElseThrow(() -> new RuntimeException("Vehícle with plate " + registerRequestDto.getPlate() + "not found."));
+                .orElseThrow(() -> new VehicleNotFoundException(registerRequestDto.getPlate()));
 
         // Buscar tarifa según el tipo de vehículo
         Tariff tariff = tariffRepository.findByType(vehicle.getType())
-                .orElseThrow(() -> new RuntimeException("Tarifa no encontrada para tipo: " + vehicle.getType()));
+                .orElseThrow(TariffNotFoundException::new);
 
         // Calcular horas
         long hours = java.time.Duration.between(registerRequestDto.getEntryHour(), registerRequestDto.getExitHour()).toHours();

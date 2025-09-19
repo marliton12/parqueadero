@@ -1,6 +1,6 @@
 package com.marlon.parking.controller;
 
-import com.marlon.parking.Dto.RegisterRequestDto;
+import com.marlon.parking.Dto.requests.RegisterRequestDto;
 import com.marlon.parking.service.RegisterService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegisterController {
 
     private final RegisterService registerService;
+
     public RegisterController(RegisterService registerService) {
         this.registerService = registerService;
     }

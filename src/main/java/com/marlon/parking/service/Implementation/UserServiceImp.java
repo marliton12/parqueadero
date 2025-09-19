@@ -1,11 +1,12 @@
-package com.marlon.parking.service;
+package com.marlon.parking.service.Implementation;
 
-import com.marlon.parking.Dto.UserRequestDto;
-import com.marlon.parking.Dto.UserResponseDto;
+import com.marlon.parking.Dto.requests.UserRequestDto;
+import com.marlon.parking.Dto.responses.UserResponseDto;
 import com.marlon.parking.Entity.User;
 import com.marlon.parking.Exception.UserDoesNotRegisteredException;
 import com.marlon.parking.Exception.UserAlreadyRegisteredException;
 import com.marlon.parking.Repository.UserRepository;
+import com.marlon.parking.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImp implements UserService{
+public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
 

@@ -1,8 +1,7 @@
 package com.marlon.parking.service;
 
-import com.marlon.parking.Dto.UserRequestDto;
-import com.marlon.parking.Dto.UserResponseDto;
-import com.marlon.parking.Entity.User;
+import com.marlon.parking.Dto.requests.UserRequestDto;
+import com.marlon.parking.Dto.responses.UserResponseDto;
 
 import java.util.List;
 

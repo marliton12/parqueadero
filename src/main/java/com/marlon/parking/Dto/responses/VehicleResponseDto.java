@@ -1,4 +1,4 @@
-package com.marlon.parking.Dto;
+package com.marlon.parking.Dto.responses;
 
 import com.marlon.parking.Entity.VehicleType;
 import lombok.AllArgsConstructor;
@@ -15,4 +15,6 @@ public class VehicleResponseDto {
     private VehicleType type;
 
     private String color;
+
+    private String name;
 }

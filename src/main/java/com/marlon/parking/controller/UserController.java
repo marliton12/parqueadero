@@ -1,11 +1,9 @@
 package com.marlon.parking.controller;
 
 
-import com.marlon.parking.Dto.UserRequestDto;
-import com.marlon.parking.Dto.UserResponseDto;
-import com.marlon.parking.Entity.User;
+import com.marlon.parking.Dto.requests.UserRequestDto;
+import com.marlon.parking.Dto.responses.UserResponseDto;
 import com.marlon.parking.service.UserService;
-import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

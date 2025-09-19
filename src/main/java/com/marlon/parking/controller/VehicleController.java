@@ -1,8 +1,9 @@
 package com.marlon.parking.controller;
 
-import com.marlon.parking.Dto.VehicleRequestDto;
-import com.marlon.parking.Dto.VehicleResponseDto;
+import com.marlon.parking.Dto.requests.VehicleRequestDto;
+import com.marlon.parking.Dto.responses.VehicleResponseDto;
 import com.marlon.parking.service.VehicleService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,5 +29,11 @@ public class VehicleController {
     public ResponseEntity<List <VehicleResponseDto>> getAllVehicle(){
         return ResponseEntity
                 .ok(vehicleService.getAllVehicles());
+    }
+
+    @DeleteMapping("/{plate}")
+    public ResponseEntity<String> deleteVehicles(@PathVariable String plate){
+        vehicleService.deleteVehicle(plate);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
