@@ -5,6 +5,7 @@ import com.marlon.parking.Dto.responses.VehicleResponseDto;
 import com.marlon.parking.Entity.User;
 import com.marlon.parking.Entity.Vehicle;
 import com.marlon.parking.Exception.UserDoesNotRegisteredException;
+import com.marlon.parking.Exception.VehicleAlreadyRegisteredException;
 import com.marlon.parking.Exception.VehicleNotFoundException;
 import com.marlon.parking.Repository.UserRepository;
 import com.marlon.parking.Repository.VehicleRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VehicleServiceImp implements VehicleService {
@@ -30,9 +32,14 @@ public class VehicleServiceImp implements VehicleService {
     @Transactional
     @Override
     public void createVehicle(VehicleRequestDto vehicleRequestDto) {
-        User user = userRepository.findUserByDocumentId(vehicleRequestDto.getDocumentId()) .orElseThrow(() -> new UserDoesNotRegisteredException(vehicleRequestDto.getDocumentId()));
-        Vehicle vehicle = new Vehicle(null, vehicleRequestDto.getPlate(), vehicleRequestDto.getType(), vehicleRequestDto.getColor(), user);
-        vehicleRepository.save(vehicle);
+        Optional<Vehicle> vehicleExist = vehicleRepository.findByPlate(vehicleRequestDto.getPlate());
+        if (vehicleExist.isEmpty()) {
+            User user = userRepository.findUserByDocumentId(vehicleRequestDto.getDocumentId()).orElseThrow(() -> new UserDoesNotRegisteredException(vehicleRequestDto.getDocumentId()));
+            Vehicle vehicle = new Vehicle(null, vehicleRequestDto.getPlate(), vehicleRequestDto.getType(), vehicleRequestDto.getColor(), user);
+            vehicleRepository.save(vehicle);
+        }else{
+            throw new VehicleAlreadyRegisteredException(vehicleRequestDto.getPlate());
+        }
     }
 
     @Override

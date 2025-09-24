@@ -2,11 +2,13 @@ package com.marlon.parking.service.Implementation;
 
 import com.marlon.parking.Dto.requests.RegisterRequestDto;
 import com.marlon.parking.Entity.Register;
+import com.marlon.parking.Entity.Space;
 import com.marlon.parking.Entity.Tariff;
 import com.marlon.parking.Entity.Vehicle;
 import com.marlon.parking.Exception.TariffNotFoundException;
 import com.marlon.parking.Exception.VehicleNotFoundException;
 import com.marlon.parking.Repository.RegisterRepository;
+import com.marlon.parking.Repository.SpaceRepository;
 import com.marlon.parking.Repository.TariffRepository;
 import com.marlon.parking.Repository.VehicleRepository;
 import com.marlon.parking.service.RegisterService;
@@ -21,11 +23,13 @@ public class RegisterServiceImp implements RegisterService {
     private final RegisterRepository registerRepository;
     private final VehicleRepository vehicleRepository;
     private final TariffRepository tariffRepository;
+    private final SpaceRepository spaceRepository;
 
-    public RegisterServiceImp(RegisterRepository registerRepository, VehicleRepository vehicleRepository, TariffRepository tariffRepository) {
+    public RegisterServiceImp(RegisterRepository registerRepository, VehicleRepository vehicleRepository, TariffRepository tariffRepository, SpaceRepository spaceRepository) {
         this.registerRepository = registerRepository;
         this.vehicleRepository = vehicleRepository;
         this.tariffRepository = tariffRepository;
+        this.spaceRepository = spaceRepository;
     }
 
     @Transactional
@@ -52,6 +56,7 @@ public class RegisterServiceImp implements RegisterService {
         // Crear y guardar el registro
         Register register = new Register();
         register.setVehicle(vehicle);
+        register.setSpace(spaceRepository.findById(registerRequestDto.getIdSpace()).get());
         register.setEntryHour(registerRequestDto.getEntryHour());
         register.setExitHour(registerRequestDto.getExitHour());
         register.setCost(cost);

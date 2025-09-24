@@ -13,4 +13,5 @@ public class VehicleRequestDto {
     private VehicleType type;
     private String color;
     private String documentId;
+    private Long idSpace;
 }

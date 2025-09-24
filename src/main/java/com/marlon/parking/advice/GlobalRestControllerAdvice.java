@@ -1,9 +1,6 @@
 package com.marlon.parking.advice;
 
-import com.marlon.parking.Exception.TariffNotFoundException;
-import com.marlon.parking.Exception.UserDoesNotRegisteredException;
-import com.marlon.parking.Exception.UserAlreadyRegisteredException;
-import com.marlon.parking.Exception.VehicleNotFoundException;
+import com.marlon.parking.Exception.*;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -26,6 +23,11 @@ public class GlobalRestControllerAdvice {
 
     @ExceptionHandler(TariffNotFoundException.class)
     public  String tariffNotFoundException(TariffNotFoundException exception){
+        return exception.getMessage();
+    }
+
+    @ExceptionHandler(VehicleAlreadyRegisteredException.class)
+    public  String vehicleAlreadyRegisteredException(VehicleAlreadyRegisteredException exception){
         return exception.getMessage();
     }
 

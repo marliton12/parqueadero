@@ -25,6 +25,7 @@ public class Space {
     @Column(name = "codigo", nullable = false)
     private String code;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
     private VehicleType type;
 
@@ -34,5 +35,7 @@ public class Space {
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private List<Register> registers = new ArrayList<>();
 
-
+    public Space(Long id) {
+        this.id = id;
+    }
 }
