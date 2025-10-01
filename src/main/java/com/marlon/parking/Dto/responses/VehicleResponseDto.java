@@ -16,5 +16,5 @@ public class VehicleResponseDto {
 
     private String color;
 
-    private String name;
+    private UserResponseDto userResponseDto;
 }

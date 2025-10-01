@@ -39,6 +39,13 @@ public class SpaceServiceImp implements SpaceService {
     }
 
     @Override
+    public void enable(Long id) {
+        Space space = repository.findById(id).get();
+        space.setAvailable(true);
+        repository.save(space);
+    }
+
+    @Override
     public Space findById(Long id) {
         return repository.findById(id).get();
     }

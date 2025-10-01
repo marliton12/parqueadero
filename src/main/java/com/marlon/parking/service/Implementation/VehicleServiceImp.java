@@ -1,6 +1,7 @@
 package com.marlon.parking.service.Implementation;
 
 import com.marlon.parking.Dto.requests.VehicleRequestDto;
+import com.marlon.parking.Dto.responses.UserResponseDto;
 import com.marlon.parking.Dto.responses.VehicleResponseDto;
 import com.marlon.parking.Entity.User;
 import com.marlon.parking.Entity.Vehicle;
@@ -35,7 +36,7 @@ public class VehicleServiceImp implements VehicleService {
         Optional<Vehicle> vehicleExist = vehicleRepository.findByPlate(vehicleRequestDto.getPlate());
         if (vehicleExist.isEmpty()) {
             User user = userRepository.findUserByDocumentId(vehicleRequestDto.getDocumentId()).orElseThrow(() -> new UserDoesNotRegisteredException(vehicleRequestDto.getDocumentId()));
-            Vehicle vehicle = new Vehicle(null, vehicleRequestDto.getPlate(), vehicleRequestDto.getType(), vehicleRequestDto.getColor(), user);
+            Vehicle vehicle = new Vehicle(null, vehicleRequestDto.getPlate(), vehicleRequestDto.getType(), vehicleRequestDto.getColor(), null, user);
             vehicleRepository.save(vehicle);
         }else{
             throw new VehicleAlreadyRegisteredException(vehicleRequestDto.getPlate());
@@ -46,9 +47,9 @@ public class VehicleServiceImp implements VehicleService {
     public List<VehicleResponseDto> getAllVehicles() {
         List<Vehicle> vehicles = vehicleRepository.findAll();
         List<VehicleResponseDto> dtos = new ArrayList<>();
-        for (int i = 0; i < vehicles.size(); i++) {
-            Vehicle vehicle = vehicles.get(i);
-            VehicleResponseDto aux = new VehicleResponseDto(vehicle.getId(), vehicle.getPlate(), vehicle.getType(), vehicle.getColor(), null);
+        for (Vehicle vehicle : vehicles) {
+            User user = vehicle.getUser();
+            VehicleResponseDto aux = new VehicleResponseDto(vehicle.getId(), vehicle.getPlate(), vehicle.getType(), vehicle.getColor(), new UserResponseDto(user.getId(), user.getName(), user.getDocumentId(), user.getPhone(), user.getEmail()));
             dtos.add(aux);
         }
         return dtos;
@@ -57,7 +58,8 @@ public class VehicleServiceImp implements VehicleService {
     @Override
     public VehicleResponseDto findVehicleByPlate(String plate) {
         Vehicle vehicle = vehicleRepository.findByPlate(plate).orElseThrow(() -> new VehicleNotFoundException(plate));
-        VehicleResponseDto dto = new VehicleResponseDto(vehicle.getId(), vehicle.getPlate(), vehicle.getType(), vehicle.getColor(), null);
+        User user = vehicle.getUser();
+        VehicleResponseDto dto = new VehicleResponseDto(vehicle.getId(), vehicle.getPlate(), vehicle.getType(), vehicle.getColor(),  new UserResponseDto(user.getId(), user.getName(), user.getDocumentId(), user.getPhone(), user.getEmail()));
         return dto;
     }
 

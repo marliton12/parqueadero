@@ -1,10 +1,10 @@
 package com.marlon.parking.service.Implementation;
 
 import com.marlon.parking.Dto.requests.RegisterRequestDto;
-import com.marlon.parking.Entity.Register;
-import com.marlon.parking.Entity.Space;
-import com.marlon.parking.Entity.Tariff;
-import com.marlon.parking.Entity.Vehicle;
+import com.marlon.parking.Dto.responses.RegisterResponseDto;
+import com.marlon.parking.Dto.responses.UserResponseDto;
+import com.marlon.parking.Dto.responses.VehicleResponseDto;
+import com.marlon.parking.Entity.*;
 import com.marlon.parking.Exception.TariffNotFoundException;
 import com.marlon.parking.Exception.VehicleNotFoundException;
 import com.marlon.parking.Repository.RegisterRepository;
@@ -62,5 +62,13 @@ public class RegisterServiceImp implements RegisterService {
         register.setCost(cost);
 
         registerRepository.save(register);
+    }
+
+    @Override
+    public RegisterResponseDto get(Long spaceId) {
+        Register register = registerRepository.findBySpace_Id(spaceId).get();
+        Vehicle vehicle = register.getVehicle();
+        User user = register.getVehicle().getUser();
+        return new RegisterResponseDto(register.getId(), register.getEntryHour(), register.getExitHour(), register.getCost(), new VehicleResponseDto(vehicle.getId(), vehicle.getPlate(), vehicle.getType(), vehicle.getColor(), new UserResponseDto(user.getId(), user.getName(), user.getDocumentId(), user.getPhone(), user.getEmail())));
     }
 }

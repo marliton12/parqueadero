@@ -11,6 +11,7 @@ public interface SpaceService {
     List<SpaceResponseDto> getAll();
 
     void disable(Long id);
+    void enable(Long id);
 
     Space findById(Long id);
 }

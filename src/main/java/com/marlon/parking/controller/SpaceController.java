@@ -4,9 +4,7 @@ import com.marlon.parking.Dto.responses.SpaceResponseDto;
 import com.marlon.parking.service.SpaceService;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.function.EntityResponse;
 
 import java.util.List;
@@ -24,5 +22,13 @@ public class SpaceController {
     @GetMapping
     public ResponseEntity<List<SpaceResponseDto>> getAll() {
         return ResponseEntity.ok(service.getAll());
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<String> updateStatus(
+            @PathVariable Long id
+    ) {
+        service.enable(id);
+        return ResponseEntity.ok("Estado actualizado correctamente");
     }
 }
